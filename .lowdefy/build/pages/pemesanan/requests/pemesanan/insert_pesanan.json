@@ -1,0 +1,95 @@
+{
+  "id": "request:pemesanan:pemesanan:insert_pesanan",
+  "type": "GoogleSheetAppendOne",
+  "connectionId": "gs_pemesanan",
+  "properties": {
+    "row": {
+      "id": {
+        "_nunjucks": {
+          "template": "'{{ timestamp | date(\"X\") }}'\n",
+          "on": {
+            "timestamp": {
+              "_date": "now"
+            }
+          }
+        }
+      },
+      "tanggal_pesan": {
+        "_nunjucks": {
+          "template": "'{{ timestamp | date(\"YYYY-MM-DD hh:mm:s\") }}'\n",
+          "on": {
+            "timestamp": {
+              "_state": "tanggal_pesan"
+            }
+          }
+        }
+      },
+      "hari_pesan": {
+        "_nunjucks": {
+          "template": "'{{ timestamp | date(\"dddd\") }}'\n",
+          "on": {
+            "timestamp": {
+              "_state": "tanggal_pesan"
+            }
+          }
+        }
+      },
+      "nama_pasien": {
+        "_state": "nama_pasien"
+      },
+      "jenis_terapi": {
+        "_state": "jenis_terapi"
+      },
+      "jenis_kelamin": {
+        "_state": "jenis_kelamin"
+      },
+      "usia": {
+        "_state": "usia"
+      },
+      "lokasi": {
+        "_state": "lokasi"
+      },
+      "kontak_pasien": {
+        "_state": "kontak_pasien"
+      },
+      "hiv": {
+        "_state": "hiv"
+      },
+      "herpes": {
+        "_state": "herpes"
+      },
+      "demam": {
+        "_state": "demam"
+      },
+      "haid": {
+        "_state": "haid"
+      },
+      "hamil": {
+        "_state": "hamil"
+      },
+      "informed_from": {
+        "_state": "informed_from"
+      },
+      "status_pasien": {
+        "_state": "status_pasien"
+      },
+      "created_at": {
+        "_date": "now"
+      },
+      "updated_at": {
+        "_date": "now"
+      },
+      "concent": {
+        "_state": "concent"
+      },
+      "cabang": {
+        "_state": "nama_cabang"
+      }
+    }
+  },
+  "auth": {
+    "public": true
+  },
+  "requestId": "insert_pesanan",
+  "contextId": "pemesanan"
+}

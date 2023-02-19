@@ -1,0 +1,8 @@
+# Header
+  logo:
+    src: public/logo/logo-dark-light.png
+  header:
+    theme: light
+  title: 
+    _var: headerTitle
+# Header

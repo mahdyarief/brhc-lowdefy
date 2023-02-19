@@ -1,0 +1,15 @@
+{
+  "id": "request:pemesanan:pemesanan:getCabang",
+  "type": "GoogleSheetGetMany",
+  "connectionId": "gs_cabang",
+  "properties": {
+    "options": {
+      "limit": 10
+    }
+  },
+  "auth": {
+    "public": true
+  },
+  "requestId": "getCabang",
+  "contextId": "pemesanan"
+}

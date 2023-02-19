@@ -1,0 +1,58 @@
+id: box
+type: Box
+layout:
+  span: 8
+blocks:
+  - id: nama_cabang
+    type: Selector
+    properties:
+      options:
+        _mql.aggregate:
+          on:
+            _if_none:
+              - _request: getCabang
+              - []
+          pipeline:
+            - $project:
+                value: $nama_cabang
+                label: $nama_cabang
+            - $sort:
+                label: 1
+      label:
+        title: Cabang BRHC
+        inline: true
+      placeholder: Pilih Cabang
+    events:
+      onMount:
+        - id: default_pilih_cabang
+          type: SetState
+          params:
+            nama_cabang:
+              _global: pilih_cabang
+        - id: do_request
+          type: Request
+          params:
+            _var: requestParams
+        - id: do_fetch
+          type: SetState
+          params:
+            _var: fetchParams
+      onChange:
+        - id: set_pilih_cabang
+          type: SetState
+          params:
+            nama_cabang:
+              _state: nama_cabang
+        - id: set_cabang_global
+          type: SetGlobal
+          params:
+            pilih_cabang:
+                _state: nama_cabang
+        - id: get_foto
+          type: Request
+          params:
+            _var: changeRequestParams
+        - id: fetch_foto
+          type: SetState
+          params:
+            _var: changeFetchParams

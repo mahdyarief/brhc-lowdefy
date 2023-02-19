@@ -1,0 +1,72 @@
+id: card_display
+type: Card
+layout:
+  contentGutter: 16
+  span: 18
+areas:
+  content:
+    blocks:
+      - id: box
+        type: Box
+        layout:
+          span: 16
+        blocks:
+          - id: title
+            type: Title
+            properties:
+              level: 3
+              content:
+                _var: cardTitle
+      - _ref:
+          path: block/pilihCabang.yaml
+          vars:
+            requestParams: getFoto
+            fetchParams:
+              data_foto:
+                _request: getFoto
+            changeRequestParams: getFoto
+            changeFetchParams:
+              data_foto:
+                _request: getFoto
+      - id: title
+        type: Title
+        properties:
+          level: 4
+          content:
+            _var: descId
+      - id: descriptions
+        type: Descriptions
+        layout:
+          span: 12
+        properties:
+          bordered: true
+          column: 1
+          size: small
+          items:
+            - label: Alamat
+              value:
+                _state: data_foto.alamat
+            - label: Kontak
+              value:
+                _nunjucks:
+                  template: |
+                    <a href="https://wa.me/62{{ kontak }}" target="_blank">+62{{ kontak }}</a>
+                  on:
+                    _state: data_foto
+      - id: description
+        type: Paragraph
+        properties:
+          content:
+            _var: descContent
+      - id: image
+        type: Img
+        properties:
+          style:
+            width: 100%;
+            max-width: 700px;
+            height: auto;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+          src:
+            _var: descImage

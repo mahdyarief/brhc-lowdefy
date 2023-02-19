@@ -1,0 +1,31 @@
+# App Config
+lowdefy: 3.23.3
+name: Lowdefy starter
+licence: MIT
+# App Connections
+connections:
+  - _ref: connections/gsJenisTerapi.yaml
+  - _ref: connections/gsPemesanan.yaml
+  - _ref: connections/gsCabang.yaml
+  - _ref: connections/gsFoto.yaml
+# App Menus
+menus:
+  - id: menu
+    links:
+      - id: link1
+        type: MenuLink
+        pageId: home-page
+        properties:
+          title: Beranda
+          icon: HomeOutlined
+      - id: link2
+        type: MenuLink
+        pageId: pemesanan
+        properties:
+          title: Pemesanan
+          icon: OrderedListOutlined   
+# All the pages in the app are listed here.
+pages:
+  - _ref: pages/home/home.yaml
+  - _ref: pages/pemesanan/pemesanan.yaml
+  - _ref: pages/pemesanan/terima-kasih.yaml

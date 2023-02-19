@@ -1,0 +1,18 @@
+{
+  "id": "connection:gs_cabang",
+  "type": "GoogleSheet",
+  "properties": {
+    "client_email": {
+      "_secret": "SHEETS_CLIENT_EMAIL"
+    },
+    "private_key": {
+      "_base64.decode": {
+        "_secret": "SHEETS_PRIVATE_KEY"
+      }
+    },
+    "sheetId": "446605129",
+    "spreadsheetId": "1p5zXxyN42_z8MKP2ZIoTCoPOY-5P6TIvRk0GbQJrnBw",
+    "write": true
+  },
+  "connectionId": "gs_cabang"
+}

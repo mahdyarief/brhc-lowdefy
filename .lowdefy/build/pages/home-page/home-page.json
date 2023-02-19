@@ -1,0 +1,463 @@
+{
+  "id": "page:home-page",
+  "type": "PageHeaderMenu",
+  "properties": {
+    "logo": {
+      "src": "public/logo/logo-dark-light.png"
+    },
+    "header": {
+      "theme": "light"
+    },
+    "title": "Beranda"
+  },
+  "events": {
+    "onInit": {
+      "try": [
+        {
+          "id": "get_cabang",
+          "type": "Request",
+          "params": "getCabang"
+        },
+        {
+          "id": "set_cabang",
+          "type": "SetGlobal",
+          "params": {
+            "_if_none": [
+              {
+                "_state": "does_not_exist"
+              },
+              {
+                "pilih_cabang": "Malang"
+              }
+            ]
+          }
+        }
+      ],
+      "catch": []
+    }
+  },
+  "areas": {
+    "content": {
+      "justify": "center",
+      "blocks": [
+        {
+          "id": "block:home-page:card_display",
+          "type": "Card",
+          "layout": {
+            "contentGutter": 16,
+            "span": 18
+          },
+          "areas": {
+            "content": {
+              "blocks": [
+                {
+                  "id": "block:home-page:box",
+                  "type": "Box",
+                  "layout": {
+                    "span": 16
+                  },
+                  "blockId": "box",
+                  "meta": {
+                    "category": "container",
+                    "loading": false,
+                    "moduleFederation": {
+                      "module": "Box",
+                      "scope": "_at_lowdefy_slash_blocks_dash_basic",
+                      "version": "3.23.3",
+                      "remoteEntryUrl": "https://blocks-cdn.lowdefy.com/v3.23.3/blocks-basic/remoteEntry.js"
+                    }
+                  },
+                  "areas": {
+                    "content": {
+                      "blocks": [
+                        {
+                          "id": "block:home-page:title",
+                          "type": "Title",
+                          "properties": {
+                            "level": 3,
+                            "content": "Selamat Datang,"
+                          },
+                          "blockId": "title",
+                          "meta": {
+                            "category": "display",
+                            "loading": {
+                              "type": "SkeletonParagraph",
+                              "properties": {
+                                "lines": 1
+                              }
+                            },
+                            "moduleFederation": {
+                              "module": "Title",
+                              "scope": "_at_lowdefy_slash_blocks_dash_antd",
+                              "version": "3.23.3",
+                              "remoteEntryUrl": "https://blocks-cdn.lowdefy.com/v3.23.3/blocks-antd/remoteEntry.js"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "block:home-page:box",
+                  "type": "Box",
+                  "layout": {
+                    "span": 8
+                  },
+                  "blockId": "box",
+                  "meta": {
+                    "category": "container",
+                    "loading": false,
+                    "moduleFederation": {
+                      "module": "Box",
+                      "scope": "_at_lowdefy_slash_blocks_dash_basic",
+                      "version": "3.23.3",
+                      "remoteEntryUrl": "https://blocks-cdn.lowdefy.com/v3.23.3/blocks-basic/remoteEntry.js"
+                    }
+                  },
+                  "areas": {
+                    "content": {
+                      "blocks": [
+                        {
+                          "id": "block:home-page:nama_cabang",
+                          "type": "Selector",
+                          "properties": {
+                            "options": {
+                              "_mql.aggregate": {
+                                "on": {
+                                  "_if_none": [
+                                    {
+                                      "_request": "getCabang"
+                                    },
+                                    []
+                                  ]
+                                },
+                                "pipeline": [
+                                  {
+                                    "$project": {
+                                      "value": "$nama_cabang",
+                                      "label": "$nama_cabang"
+                                    }
+                                  },
+                                  {
+                                    "$sort": {
+                                      "label": 1
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            "label": {
+                              "title": "Cabang BRHC",
+                              "inline": true
+                            },
+                            "placeholder": "Pilih Cabang"
+                          },
+                          "events": {
+                            "onMount": {
+                              "try": [
+                                {
+                                  "id": "default_pilih_cabang",
+                                  "type": "SetState",
+                                  "params": {
+                                    "nama_cabang": {
+                                      "_global": "pilih_cabang"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "do_request",
+                                  "type": "Request",
+                                  "params": "getFoto"
+                                },
+                                {
+                                  "id": "do_fetch",
+                                  "type": "SetState",
+                                  "params": {
+                                    "data_foto": {
+                                      "_request": "getFoto"
+                                    }
+                                  }
+                                }
+                              ],
+                              "catch": []
+                            },
+                            "onChange": {
+                              "try": [
+                                {
+                                  "id": "set_pilih_cabang",
+                                  "type": "SetState",
+                                  "params": {
+                                    "nama_cabang": {
+                                      "_state": "nama_cabang"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "set_cabang_global",
+                                  "type": "SetGlobal",
+                                  "params": {
+                                    "pilih_cabang": {
+                                      "_state": "nama_cabang"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "get_foto",
+                                  "type": "Request",
+                                  "params": "getFoto"
+                                },
+                                {
+                                  "id": "fetch_foto",
+                                  "type": "SetState",
+                                  "params": {
+                                    "data_foto": {
+                                      "_request": "getFoto"
+                                    }
+                                  }
+                                }
+                              ],
+                              "catch": []
+                            }
+                          },
+                          "blockId": "nama_cabang",
+                          "meta": {
+                            "category": "input",
+                            "loading": {
+                              "type": "SkeletonInput"
+                            },
+                            "moduleFederation": {
+                              "module": "Selector",
+                              "scope": "_at_lowdefy_slash_blocks_dash_antd",
+                              "version": "3.23.3",
+                              "remoteEntryUrl": "https://blocks-cdn.lowdefy.com/v3.23.3/blocks-antd/remoteEntry.js"
+                            },
+                            "valueType": "any"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "block:home-page:title",
+                  "type": "Title",
+                  "properties": {
+                    "level": 4,
+                    "content": {
+                      "_nunjucks": "BRHC Cabang {{ nama_cabang }}"
+                    }
+                  },
+                  "blockId": "title",
+                  "meta": {
+                    "category": "display",
+                    "loading": {
+                      "type": "SkeletonParagraph",
+                      "properties": {
+                        "lines": 1
+                      }
+                    },
+                    "moduleFederation": {
+                      "module": "Title",
+                      "scope": "_at_lowdefy_slash_blocks_dash_antd",
+                      "version": "3.23.3",
+                      "remoteEntryUrl": "https://blocks-cdn.lowdefy.com/v3.23.3/blocks-antd/remoteEntry.js"
+                    }
+                  }
+                },
+                {
+                  "id": "block:home-page:descriptions",
+                  "type": "Descriptions",
+                  "layout": {
+                    "span": 12
+                  },
+                  "properties": {
+                    "bordered": true,
+                    "column": 1,
+                    "size": "small",
+                    "items": [
+                      {
+                        "label": "Alamat",
+                        "value": {
+                          "_state": "data_foto.alamat"
+                        }
+                      },
+                      {
+                        "label": "Kontak",
+                        "value": {
+                          "_nunjucks": {
+                            "template": "<a href=\"https://wa.me/62{{ kontak }}\" target=\"_blank\">+62{{ kontak }}</a>\n",
+                            "on": {
+                              "_state": "data_foto"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "blockId": "descriptions",
+                  "meta": {
+                    "category": "display",
+                    "loading": {
+                      "type": "Skeleton",
+                      "properties": {
+                        "height": 80
+                      }
+                    },
+                    "moduleFederation": {
+                      "module": "Descriptions",
+                      "scope": "_at_lowdefy_slash_blocks_dash_antd",
+                      "version": "3.23.3",
+                      "remoteEntryUrl": "https://blocks-cdn.lowdefy.com/v3.23.3/blocks-antd/remoteEntry.js"
+                    }
+                  }
+                },
+                {
+                  "id": "block:home-page:description",
+                  "type": "Paragraph",
+                  "properties": {
+                    "content": {
+                      "_state": "data_foto.deskripsi"
+                    }
+                  },
+                  "blockId": "description",
+                  "meta": {
+                    "category": "display",
+                    "loading": {
+                      "type": "SkeletonParagraph"
+                    },
+                    "moduleFederation": {
+                      "module": "Paragraph",
+                      "scope": "_at_lowdefy_slash_blocks_dash_antd",
+                      "version": "3.23.3",
+                      "remoteEntryUrl": "https://blocks-cdn.lowdefy.com/v3.23.3/blocks-antd/remoteEntry.js"
+                    }
+                  }
+                },
+                {
+                  "id": "block:home-page:image",
+                  "type": "Img",
+                  "properties": {
+                    "style": {
+                      "width": "100%;",
+                      "max-width": "700px;",
+                      "height": "auto;",
+                      "display": "block;",
+                      "margin-left": "auto;",
+                      "margin-right": "auto;"
+                    },
+                    "src": {
+                      "_state": "data_foto.url"
+                    }
+                  },
+                  "blockId": "image",
+                  "meta": {
+                    "category": "display",
+                    "loading": false,
+                    "moduleFederation": {
+                      "module": "Img",
+                      "scope": "_at_lowdefy_slash_blocks_dash_basic",
+                      "version": "3.23.3",
+                      "remoteEntryUrl": "https://blocks-cdn.lowdefy.com/v3.23.3/blocks-basic/remoteEntry.js"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "blockId": "card_display",
+          "meta": {
+            "category": "container",
+            "loading": {
+              "type": "Skeleton",
+              "properties": {
+                "height": 80
+              }
+            },
+            "moduleFederation": {
+              "module": "Card",
+              "scope": "_at_lowdefy_slash_blocks_dash_antd",
+              "version": "3.23.3",
+              "remoteEntryUrl": "https://blocks-cdn.lowdefy.com/v3.23.3/blocks-antd/remoteEntry.js"
+            }
+          }
+        }
+      ]
+    },
+    "footer": {
+      "blocks": [
+        {
+          "id": "block:home-page:footer",
+          "type": "Paragraph",
+          "properties": {
+            "type": "secondary",
+            "content": "Made by a Versatile 🤖\n"
+          },
+          "blockId": "footer",
+          "meta": {
+            "category": "display",
+            "loading": {
+              "type": "SkeletonParagraph"
+            },
+            "moduleFederation": {
+              "module": "Paragraph",
+              "scope": "_at_lowdefy_slash_blocks_dash_antd",
+              "version": "3.23.3",
+              "remoteEntryUrl": "https://blocks-cdn.lowdefy.com/v3.23.3/blocks-antd/remoteEntry.js"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "auth": {
+    "public": true
+  },
+  "pageId": "home-page",
+  "blockId": "home-page",
+  "meta": {
+    "category": "context",
+    "loading": {
+      "type": "Spinner",
+      "properties": {
+        "height": "100vh"
+      }
+    },
+    "moduleFederation": {
+      "module": "PageHeaderMenu",
+      "scope": "_at_lowdefy_slash_blocks_dash_antd",
+      "version": "3.23.3",
+      "remoteEntryUrl": "https://blocks-cdn.lowdefy.com/v3.23.3/blocks-antd/remoteEntry.js"
+    }
+  },
+  "requests": [
+    {
+      "id": "request:home-page:home-page:getCabang",
+      "type": "GoogleSheetGetMany",
+      "connectionId": "gs_cabang",
+      "auth": {
+        "public": true
+      },
+      "requestId": "getCabang",
+      "contextId": "home-page"
+    },
+    {
+      "id": "request:home-page:home-page:getFoto",
+      "type": "GoogleSheetGetOne",
+      "connectionId": "gs_foto",
+      "auth": {
+        "public": true
+      },
+      "requestId": "getFoto",
+      "contextId": "home-page"
+    }
+  ],
+  "operators": [
+    "_state",
+    "_if_none",
+    "_request",
+    "_mql",
+    "_global",
+    "_nunjucks"
+  ]
+}

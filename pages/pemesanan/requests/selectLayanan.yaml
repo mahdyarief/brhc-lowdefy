@@ -1,0 +1,10 @@
+id: selectLayanan
+type:  GoogleSheetGetOne
+connectionId: gs_jenis_terapi
+properties:
+  filter:
+    cabang: 
+      _state: nama_cabang
+    _and:
+    jenis:
+      _state: jenis_terapi

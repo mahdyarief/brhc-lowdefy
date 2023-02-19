@@ -1,0 +1,290 @@
+id: card_display
+type: Card
+layout:
+  contentGutter: 16
+  span: 18
+areas:
+  content:
+    justify: center
+    blocks:
+      - id: box
+        type: Box
+        layout:
+          span: 16
+        blocks:
+          - id: title
+            type: Title
+            properties:
+              level: 3
+              content: Form Pemesanan
+          - id: paragraph
+            type: Paragraph
+            properties:
+              content: Mohon diisi data dibawah ini...
+      - _ref:
+          path: block/pilihCabang.yaml
+          vars:
+            requestParams: getLayanan
+            fetchParams:
+              data_layanan:
+                _request: getLayanan
+            changeRequestParams: getLayanan
+            changeFetchParams:
+              data_layanan:
+                _request: getLayanan
+      - id: box
+        type: Box
+        layout:
+          contentGutter: 15
+        blocks:
+          - id: tanggal_pesan
+            type: DateTimeSelector
+            layout:
+              span: 12
+            required: true
+            properties:
+              size: large
+              placeholder: Pilih Waktu
+              disabledDates:
+                dates: []
+                ranges: []
+              label:
+                title: Tanggal Pemesanan
+              selectUTC: true
+          - id: nama_pasien
+            type: TextInput
+            layout:
+              span: 12
+            required: true # We indicate that some fields are required, later we will validate our input before submitting the data to the server.
+            properties:
+              title: Nama
+              size: large
+              placeholder: Masukan Nama
+          - id: jenis_terapi
+            type: Selector
+            required: true
+            properties:
+              size: large
+              options:
+                _mql.aggregate:
+                  on:
+                    _if_none:
+                      - _request: getLayanan
+                      - []
+                  pipeline:
+                    - $project:
+                        value: $jenis
+                        label: $jenis
+                    - $sort:
+                        label: 1
+              label:
+                title: Jenis Terapi
+              placeholder: Pilih Terapi
+            events:
+              onChange:
+                - id: requestLayanan
+                  type: Request
+                  params: selectLayanan
+                - id: fetch_foto
+                  type: SetState
+                  params:
+                    detail_layanan:
+                      _request: selectLayanan
+          - id: descriptions
+            type: Descriptions
+            properties:
+              bordered: true
+              column: 1
+              size: large
+              items:
+                - label: Deskripsi Layanan
+                  value:
+                    _state: detail_layanan.deskripsi
+                - label: Harga
+                  value:
+                    _format.intlNumberFormat:
+                      on:
+                        _state: detail_layanan.harga
+                      params:
+                        options:
+                          style: currency
+                          currency: IDR
+                - label: Kategori Layanan
+                  value:
+                    _state: detail_layanan.kategori
+          - id: jenis_kelamin
+            type: ButtonSelector
+            layout:
+              span: 12
+            required: true
+            properties:
+              size: large
+              options:
+                - Laki Laki
+                - Perempuan
+              label:
+                title: Jenis Kelamin
+          - id: usia
+            type: NumberInput
+            layout:
+              span: 12
+            required: true
+            properties:
+              min: 10
+              max: 150
+              label:
+                title: Usia
+              placeholder: Masukan Usia
+              size: large
+          - id: lokasi
+            type: TextInput
+            layout:
+              span: 12
+            required: true
+            properties:
+              title: Lokasi
+              size: large
+              placeholder: Masukan Lokasi
+          - id: kontak_pasien
+            type: TextInput
+            layout:
+              span: 12
+            required: true
+            properties:
+              placeholder: 812xxxxxx
+              prefix: "+62"
+              prefixIcon: PhoneFilled
+              label:
+                title: Nomor Kontak
+              size: large
+            validate:
+              - message: Nomor yang anda masukan salah.
+                status: error
+                pass:
+                  _or:
+                    - _regex: ^[\d\s.\-()]{3,}$
+                    - _eq:
+                        - _state: kontak_pasien
+                        - null
+          - id: divider
+            type: Divider
+          - id: box
+            type: Box
+            blocks:
+              - id: title
+                type: Title
+                properties:
+                  level: 3
+                  content: Wajib Diisi
+              - id: paragraph
+                type: Paragraph
+                properties:
+                  content: Apakah anda memiliki kondisi dibawah ini?
+          - id: box
+            type: Box
+            blocks:
+              - id: hiv
+                type: RadioSelector
+                required: true
+                properties:
+                  options:
+                    - YA
+                    - TIDAK
+                  label:
+                    inline: true
+                    title: 1. Mengidap Penyakit HIV?
+              - id: herpes
+                type: RadioSelector
+                required: true
+                properties:
+                  options:
+                    - YA
+                    - TIDAK
+                  label:
+                    inline: true
+                    title: 2. Mengidap Penyakit Herpes?
+              - id: demam
+                type: RadioSelector
+                required: true
+                properties:
+                  options:
+                    - YA
+                    - TIDAK
+                  label:
+                    inline: true
+                    title: 3. Sedang Dalam Kondisi Demam?
+              - id: haid
+                type: RadioSelector
+                required: true
+                visible:
+                  _and:
+                    - _eq:
+                        - _state: jenis_kelamin
+                        - Perempuan
+                    - _state: jenis_kelamin
+                properties:
+                  options:
+                    - YA
+                    - TIDAK
+                  label:
+                    inline: true
+                    title: 4. Sedang Dalam Kondisi Haid?
+              - id: hamil
+                type: RadioSelector
+                required: true
+                visible:
+                  _and:
+                    - _eq:
+                        - _state: jenis_kelamin
+                        - Perempuan
+                    - _state: jenis_kelamin
+                properties:
+                  options:
+                    - Diatas 4 Bulan
+                    - Dibawah 4 Bulan
+                    - Tidak
+                  label:
+                    inline: true
+                    title: 5. Sedang Dalam Kondisi Hamil?
+              - id: informed_from
+                type: RadioSelector
+                required: true
+                properties:
+                  options:
+                    - FACEBOOK
+                    - INSTAGRAM
+                    - BROSUR
+                    - TETANGGA/ TEMAN
+                    - GOOGLE / INTERNET
+                    - TIDAK SENGAJA LEWAT
+                    - LAINNYA
+                  label:
+                    title: Mengetahui info bekamSAH dari mana?
+              - id: concent
+                type: RadioSelector
+                required: true
+                properties:
+                  options:
+                    - YA
+                  label:
+                    inline: true
+                    title: Dengan ini saya menyatakan mengisi data tersebut dengan jujur dan benar.
+      - id: save
+        type: Button
+        properties:
+          title: Simpan
+          block: true
+          color: 'green'
+          icon: SendOutlined
+          size: large
+        events:
+          onClick:
+            - id: validate # Then validate our webform input.
+              type: Validate
+            - id: call_save # Then call the `save_survey` request which will insert the new response record on the survey Google sheet.
+              type: Request
+              params: insert_pesanan
+            - id: to_thank_you_page
+              type: Link
+              params:
+                pageId: terima-kasih

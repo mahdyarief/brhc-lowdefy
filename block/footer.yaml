@@ -1,0 +1,6 @@
+id: footer
+type: Paragraph
+properties:
+  type: secondary
+  content: |
+    Made by a Versatile 🤖

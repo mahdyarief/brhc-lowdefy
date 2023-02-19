@@ -1,0 +1,21 @@
+id: data_list # A List block to render the following blocks for all items in the product_list page state variable.
+type: List
+blocks:
+  - id: data_list.$.container # Wrap all the blocks for a brand item in a box.
+    type: Box
+    style:
+      background: "#fff" # Give the box a white background and some spacing.
+      margin: 10
+      padding: 10
+    blocks:
+      - id: data_list.$.name # Show the item name as a title in the list.
+        type: Title
+        properties:
+          content:
+            _state: data_list.$.name
+          level: 3
+      - id: data_list.$.desc # Show the item description as a paragraph in the list.
+        type: Paragraph
+        properties:
+          content:
+            _state: data_list.$.desc

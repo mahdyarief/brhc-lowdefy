@@ -1,0 +1,4 @@
+_ref:
+  path: pages/home/components/welcome.yaml
+  vars:
+    src: public/img/img1.png

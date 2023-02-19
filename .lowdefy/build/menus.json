@@ -1,0 +1,34 @@
+[
+  {
+    "id": "menu:menu",
+    "links": [
+      {
+        "id": "menuitem:menu:link1",
+        "type": "MenuLink",
+        "pageId": "home-page",
+        "properties": {
+          "title": "Beranda",
+          "icon": "HomeOutlined"
+        },
+        "auth": {
+          "public": true
+        },
+        "menuItemId": "link1"
+      },
+      {
+        "id": "menuitem:menu:link2",
+        "type": "MenuLink",
+        "pageId": "pemesanan",
+        "properties": {
+          "title": "Pemesanan",
+          "icon": "OrderedListOutlined"
+        },
+        "auth": {
+          "public": true
+        },
+        "menuItemId": "link2"
+      }
+    ],
+    "menuId": "menu"
+  }
+]

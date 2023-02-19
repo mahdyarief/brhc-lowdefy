@@ -1,0 +1,18 @@
+## Page Properties
+id: terima-kasih
+type: PageHeaderMenu
+properties:
+  _ref:
+    path: block/appLogo.yaml
+    vars:
+      headerTitle: Terima Kasih
+areas:
+  #header:
+  #  blocks:
+  content:
+    justify: center
+    blocks:
+      - _ref: pages/pemesanan/components/thanks.yaml
+  footer:
+    blocks:
+      - _ref: block/footer.yaml

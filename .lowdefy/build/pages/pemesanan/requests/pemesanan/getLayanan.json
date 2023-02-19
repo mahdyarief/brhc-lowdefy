@@ -1,0 +1,17 @@
+{
+  "id": "request:pemesanan:pemesanan:getLayanan",
+  "type": "GoogleSheetGetMany",
+  "connectionId": "gs_jenis_terapi",
+  "properties": {
+    "filter": {
+      "cabang": {
+        "_state": "nama_cabang"
+      }
+    }
+  },
+  "auth": {
+    "public": true
+  },
+  "requestId": "getLayanan",
+  "contextId": "pemesanan"
+}

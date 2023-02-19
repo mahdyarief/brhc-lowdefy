@@ -1,0 +1,6 @@
+id: getCabang
+type: GoogleSheetGetMany
+connectionId: gs_cabang
+properties:
+  options:
+    limit: 10

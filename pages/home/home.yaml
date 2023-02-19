@@ -1,0 +1,45 @@
+## Page Properties
+id: home-page
+type: PageHeaderMenu
+properties:
+  _ref:
+    path: block/appLogo.yaml
+    vars:
+      headerTitle: Beranda
+
+## Page Events
+events:
+  onInit:
+    - id: get_cabang
+      type: Request
+      params: getCabang
+    - id: set_cabang
+      type: SetGlobal
+      params:
+        _if_none:
+          - _state: does_not_exist # Value in state that does not exist
+          - pilih_cabang: Malang
+## Page request
+requests:
+  - _ref: pages/home/requests/getCabang.yaml
+  - _ref: pages/home/requests/getFoto.yaml
+
+areas:
+  #header:
+  #  blocks:
+  content:
+    justify: center
+    blocks:
+      - _ref:
+          path: pages/home/components/homeCard.yaml
+          vars:
+            cardTitle: Selamat Datang,
+            descId:
+              _nunjucks: BRHC Cabang {{ nama_cabang }}
+            descContent:
+              _state: data_foto.deskripsi
+            descImage:
+              _state: data_foto.url
+  footer:
+    blocks:
+      - _ref: block/footer.yaml

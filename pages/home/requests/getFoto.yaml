@@ -1,0 +1,9 @@
+id: getFoto
+type:  GoogleSheetGetOne
+connectionId: gs_foto
+properties:
+  filter:
+    cabang: 
+      _state: nama_cabang
+    _and:
+    tipe: home

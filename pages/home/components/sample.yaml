@@ -1,0 +1,28 @@
+id: content_card
+type: Card
+layout:
+  span: 18
+blocks:
+  - id: content
+    type: Result
+    properties:
+      title: Welcome to your Lowdefy app 2
+      subTitle: We are excited to see what you are going to build
+      icon:
+        name: HeartTwoTone
+        color: "#f00"
+    areas:
+      extra:
+        blocks:
+          - id: docs_button
+            type: Button
+            properties:
+              size: large
+              title: Let's build something
+              color: "#1890ff"
+            events:
+              onClick:
+                - id: link_to_page
+                  type: Link
+                  params:
+                    pageId: insert-data

@@ -1,0 +1,38 @@
+## Page Properties
+id: pemesanan
+type: PageHeaderMenu
+properties:
+  _ref:
+    path: block/appLogo.yaml
+    vars:
+      headerTitle: Pemesan
+## Page Requests
+requests:
+  - _ref: pages/home/requests/getCabang.yaml
+  - _ref: pages/pemesanan/requests/getLayanan.yaml
+  - _ref: pages/pemesanan/requests/insertPesanan.yaml
+  - _ref: pages/pemesanan/requests/selectLayanan.yaml
+
+## Page Events
+events:
+  onInit:
+    - id: get_cabang
+      type: Request
+      params: getCabang
+    - id: set_cabang
+      type: SetGlobal
+      params:
+        _if_none:
+          - _state: does_not_exist # Value in state that does not exist
+          - pilih_cabang: Malang
+
+areas:
+  #header:
+  #  blocks:
+  content:
+    justify: center
+    blocks:
+      - _ref: pages/pemesanan/components/form_pemesanan.yaml
+  footer:
+    blocks:
+      - _ref: block/footer.yaml
